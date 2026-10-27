@@ -37,6 +37,7 @@ struct InsightsSettingsView: View {
       ) {
         InsightSummaryCard.wordsThisWeek(momentum)
         InsightSummaryCard.averagePace(summary)
+        InsightSummaryCard.averageSessionLength(summary)
         InsightSummaryCard.voiceTime(summary)
       }
 
@@ -152,6 +153,18 @@ private struct InsightSummaryCard: View {
       unit: InsightsFormat.durationUnit(summary.totalSpeakingDuration),
       comparison: "\(summary.totalWords.formatted()) words dictated in total",
       caption: "Longest streak · \(InsightsFormat.count(summary.longestStreak, singular: "day"))",
+      tint: InsightsPalette.time
+    )
+  }
+
+  static func averageSessionLength(_ summary: UsageSummary) -> Self {
+    Self(
+      title: "Words per session",
+      symbol: "character.cursor.ibeam",
+      value: Int(summary.averageWordsPerSession.rounded()).formatted(),
+      unit: "words",
+      comparison: "Across \(InsightsFormat.count(summary.completedSessions, singular: "session"))",
+      caption: "Weighted by session count",
       tint: InsightsPalette.time
     )
   }
