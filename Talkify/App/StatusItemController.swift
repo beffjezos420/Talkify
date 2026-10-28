@@ -77,6 +77,16 @@ final class StatusItemController: NSObject {
     updatesItem.target = self
     menu.addItem(updatesItem)
 
+    menu.addItem(.separator())
+
+    let versionItem = NSMenuItem(
+      title: "Talkify \(Self.appVersion)",
+      action: nil,
+      keyEquivalent: ""
+    )
+    versionItem.isEnabled = false
+    menu.addItem(versionItem)
+
     menu.addItem(NSMenuItem(
       title: "Quit Talkify",
       action: #selector(NSApplication.terminate(_:)),
@@ -254,5 +264,14 @@ final class StatusItemController: NSObject {
 
   @objc private func openSettingsItem() {
     openSettings()
+  }
+
+  /// The running app's version and build number, shown in the status menu
+  /// so users can read it at a glance when reporting issues.
+  private static var appVersion: String {
+    let info = Bundle.main.infoDictionary
+    let short = info?["CFBundleShortVersionString"] as? String ?? "—"
+    let build = info?["CFBundleVersion"] as? String ?? "—"
+    return "\(short) (\(build))"
   }
 }
