@@ -54,6 +54,15 @@ struct DictationSettingsView: View {
           Button("Clear History…") { isConfirmingClear = true }
             .buttonStyle(SettingsButtonStyle())
         }
+
+        SettingsRow(
+          title: "Open in Finder",
+          description: "Browse the history folder"
+        ) {
+          Button("Open") { openInFinder() }
+            .buttonStyle(SettingsButtonStyle())
+        }
+        .disabled(!settings.dictationHistoryEnabled)
       }
 
     }
@@ -85,5 +94,9 @@ struct DictationSettingsView: View {
     Task {
       try? await historyStore.clear(folder: folder)
     }
+  }
+
+  private func openInFinder() {
+    NSWorkspace.shared.open(settings.resolvedHistoryFolder)
   }
 }

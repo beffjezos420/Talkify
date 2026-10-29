@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// The General section: app-wide behaviour that is not tied to any one
-/// feature. Currently just Launch at Login.
+/// feature.
 struct GeneralSettingsView: View {
   let launchAtLogin: LaunchAtLoginService
 
