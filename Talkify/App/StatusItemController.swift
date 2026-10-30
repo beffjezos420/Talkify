@@ -44,6 +44,15 @@ final class StatusItemController: NSObject {
 
     let menu = NSMenu()
 
+    let aboutItem = NSMenuItem(
+      title: "About Talkify…",
+      action: #selector(openAboutItem),
+      keyEquivalent: ""
+    )
+    aboutItem.target = self
+    menu.addItem(aboutItem)
+    menu.addItem(.separator())
+
     dictationItem.action = #selector(toggleDictationItem)
     dictationItem.target = self
     menu.addItem(dictationItem)
@@ -264,6 +273,14 @@ final class StatusItemController: NSObject {
 
   @objc private func openSettingsItem() {
     openSettings()
+  }
+
+  @objc private func openAboutItem() {
+    // There is no app menu to reach Help ▸ About from: Talkify runs as a
+    // menu-bar-only LSUIElement, so the standard About panel is reachable
+    // only through this item.
+    NSApp.activate()
+    NSApp.orderFrontStandardAboutPanel(nil)
   }
 
   /// The running app's version and build number, shown in the status menu
